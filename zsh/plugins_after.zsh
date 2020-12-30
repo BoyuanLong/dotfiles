@@ -31,7 +31,14 @@ if [[ "$(tput colors)" == "256" ]]; then
 fi
 
 # dircolors
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    if [[ "$(tput colors)" == "256" ]]; then
+       eval $(dircolors =(cat ~/.shell/plugins/dircolors-solarized/dircolors.256dark ~/.shell/dircolors.extra))
+    fi
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    if [[ "$(tput colors)" == "256" ]]; then
+        export CLICOLOR=1
+        export LSCOLORS=exfxfeaebxxehehbadacea
+    fi
+fi
 
-# if [[ "$(tput colors)" == "256" ]]; then
-#    eval $(gdircolors =(cat ~/.shell/plugins/dircolors-solarized/dircolors.256dark ~/.shell/dircolors.extra))
-# fi

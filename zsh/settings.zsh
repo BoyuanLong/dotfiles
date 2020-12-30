@@ -47,3 +47,6 @@ bindkey "^R" history-incremental-search-backward
 
 # Disable shell builtins
 disable r
+
+# Prevent less from keeping history file
+export LESSHISTFILE=/dev/null

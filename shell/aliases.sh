@@ -1,10 +1,18 @@
 # Use colors
-alias ls='ls -G'
-alias grep='grep -G'
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
+    alias ls='ls --color=auto'
+    alias grep='grep --color'
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    alias ls='ls -G'
+    alias grep='grep -G'
+fi
 
 # ls aliases
+# ls everything in list format
 alias ll='ls -lah'
+# ls everything except for . and ..
 alias la='ls -A'
+# short name for ls
 alias l='ls'
 
 # Aliases to protect agianst overwritting

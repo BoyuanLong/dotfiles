@@ -9,6 +9,7 @@ if [ -f ~/.zshrc_local_before ]; then
 fi
 
 # External plugins (initialized before)
+# For now we only have zsh-completions
 source ~/.zsh/plugins_before.zsh
 
 # Settings

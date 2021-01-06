@@ -1,23 +1,32 @@
 #!/bin/bash
 
+echo "Updating submodules..."
 git submodule update --init --recursive
+echo "Finished updating submodules"
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # vim
+echo "linking vim files..."
 ln -s ${BASEDIR}/vim/ ~/.vim
 
 # shell
+echo "linking shell files..."
 ln -s ${BASEDIR}/shell/ ~/.shell
 
 # zsh
+[ -z $(which zsh) ] && echo "WARNING: No zsh installed!"
+echo "linking zsh files..."
 ln -s ${BASEDIR}/zsh/ ~/.zsh
 ln -s ${BASEDIR}/zsh/zshrc ~/.zshrc
 
 # tmux
+[ -z $(which tmux) ] && echo "WARNING: No tmux installed!"
+echo "linking tmux files..."
 ln -s ${BASEDIR}/tmux/ ~/.tmux
 ln -s ${BASEDIR}/tmux/tmux.conf ~/.tmux.conf
 
 # git
+echo "linking git files..."
 ln -s ${BASEDIR}/git/gitconfig ~/.gitconfig
 ln -s ${BASEDIR}/git/gitignore_global ~/.gitignore_global

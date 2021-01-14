@@ -61,3 +61,14 @@ xin() {
         cd "${1}" && shift && "${@}"
     )
 }
+
+alias cdgr='cd "$(git root)"'
+
+alias zshu='source ~/.zshrc'
+
+dfu() {
+    (
+        cd ~/.dotfiles/ && git pull --ff-only
+    )
+}
+

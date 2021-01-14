@@ -1,3 +1,6 @@
+# Laod functions
+source ~/.dotfiles/shell/functions.sh
+
 # Allow local customizations in the ~/.shell_local_before file
 if [ -f ~/.shell_local_before ]; then
     source ~/.shell_local_before
@@ -10,19 +13,19 @@ fi
 
 # External plugins (initialized before)
 # For now we only have zsh-completions
-source ~/.zsh/plugins_before.zsh
+source ~/.dotfiles/zsh/plugins_before.zsh
 
 # Settings
-source ~/.zsh/settings.zsh
+source ~/.dotfiles/zsh/settings.zsh
 
 # Aliases
 source ~/.dotfiles/shell/aliases.sh
 
 # Prompt
-source ~/.zsh/prompt.zsh
+source ~/.dotfiles/zsh/prompt.zsh
 
 # External plugins
-source ~/.zsh/plugins_after.zsh
+source ~/.dotfiles/zsh/plugins_after.zsh
 
 # Allow local customizations in the ~/.shell_local_after file
 if [ -f ~/.shell_local_after ]; then

@@ -2,7 +2,7 @@
 
 # Syntax highlighting
 
-source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.dotfiles/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
@@ -33,7 +33,7 @@ fi
 # dircolors
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     if [[ "$(tput colors)" == "256" ]]; then
-       eval $(dircolors =(cat ~/.shell/plugins/dircolors-solarized/dircolors.256dark ~/.shell/dircolors.extra))
+       eval $(dircolors =(cat ~/.dotfiles/shell/plugins/dircolors-solarized/dircolors.256dark ~/.dotfiles/shell/dircolors.extra))
     fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     if [[ "$(tput colors)" == "256" ]]; then

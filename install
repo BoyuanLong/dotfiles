@@ -35,8 +35,8 @@ ln -s ${BASEDIR}/tmux/tmux.conf ~/.tmux.conf
 # git
 echo "================"
 echo "Setting up git files..."
-gituser=$(git config user.name)
-gitemail=$(git config user.email)
+gituser=$(git config --global --includes user.name)
+gitemail=$(git config --global --includes user.email)
 if [[ -z $gituser ]]; then
     read -p 'Git Username: ' gituser
     git config --global user.name "$gituser"

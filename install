@@ -27,6 +27,12 @@ ln -s ${BASEDIR}/tmux/ ~/.tmux
 ln -s ${BASEDIR}/tmux/tmux.conf ~/.tmux.conf
 
 # git
-echo "linking git files..."
-ln -s ${BASEDIR}/git/gitconfig ~/.gitconfig
-ln -s ${BASEDIR}/git/gitignore_global ~/.gitignore_global
+echo "Setting up git files..."
+read -p 'Git Username: ' gituser
+read -p 'Git Email: ' gitemail
+git config --global user.name $gituser
+git config --global user.email $gitemail
+git config --global core.excludesfile ~/.dotfiles/git/gitignore_global 
+git config --global include.path ~/.dotfiles/git/gitconfig 
+# ln -s ${BASEDIR}/git/gitconfig ~/.gitconfig
+# ln -s ${BASEDIR}/git/gitignore_global ~/.gitignore_global

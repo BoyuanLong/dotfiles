@@ -8,20 +8,20 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # dotfiles
 echo "====== dotfiles ======"
-echo "linking dotfiles directory..."
+echo "Linking dotfiles directory..."
 if [[ ! -f ~/.dotfiles || -L ~/.dotfiles ]]; then
-    ln -s ${BASEDIR} ~/.dotfiles
+    ln -s -f ${BASEDIR} ~/.dotfiles
 fi
 
 # vim
 echo "====== vim ======"
-echo "linking vim files..."
-ln -s ${BASEDIR}/vim/ ~/.vim
+echo "Linking vim files..."
+ln -s -f ${BASEDIR}/vim/ ~/.vim
 
 # shell
 echo "====== shell ======"
-echo "linking shell files..."
-ln -s ${BASEDIR}/shell/ ~/.shell
+echo "Linking shell files..."
+ln -s -f ${BASEDIR}/shell/ ~/.shell
 
 # zsh
 echo "====== zsh ======"

@@ -1,6 +1,3 @@
-[user]
-	name = longboyuan
-	email = longboyuan@bytedance.com
 [alias]
     # 叹号开头表示执行后续的 shell 命令
     new = "!f() { git fetch && git checkout -b sandbox/`whoami`/`date +%m-%d`/${2:-`date +%H-%M`} origin/${1:-master}; }; f"

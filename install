@@ -12,7 +12,7 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # dotfiles
 echo "====== dotfiles ======"
-if [[ ! -f ~/.dotfiles || -L ~/.dotfiles ]]; then
+if [[ ! -d ~/.dotfiles || -L ~/.dotfiles ]]; then
     ln -sfn ${BASEDIR} ~/.dotfiles && echo -e "${GREEN}Linked dotfiles directory${NC}"
 fi
 

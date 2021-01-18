@@ -7,30 +7,39 @@ echo "Finished updating submodules"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # dotfiles
+echo "================"
 echo "linking dotfiles directory..."
 if [[ ! -f ~/.dotfiles || -L ~/.dotfiles ]]; then
     ln -s ${BASEDIR} ~/.dotfiles
 fi
 
 # vim
+echo "================"
 echo "linking vim files..."
 ln -s ${BASEDIR}/vim/ ~/.vim
 
 # shell
+echo "================"
 echo "linking shell files..."
 ln -s ${BASEDIR}/shell/ ~/.shell
 
 # zsh
-[ -z $(which zsh) ] && echo "WARNING: No zsh installed!"
-echo "linking zsh files..."
-ln -s ${BASEDIR}/zsh/ ~/.zsh
-ln -s ${BASEDIR}/zsh/zshrc ~/.zshrc
+echo "================"
+if [[ -z $(which zsh) ]]; then
+    echo "WARNING: No zsh installed! Please install zsh first"
+else
+    echo "Linking zsh files..."
+    ln -s -f ${BASEDIR}/zsh/zshrc ~/.zshrc
+fi
 
 # tmux
-[ -z $(which tmux) ] && echo "WARNING: No tmux installed!"
-echo "linking tmux files..."
-ln -s ${BASEDIR}/tmux/ ~/.tmux
-ln -s ${BASEDIR}/tmux/tmux.conf ~/.tmux.conf
+echo "================"
+if [[ -z $(which tmux) ]]; then
+    echo "WARNING: No tmux installed! Please install tmux first"
+else
+    echo "Linking tmux files..."
+    ln -s -f ${BASEDIR}/tmux/tmux.conf ~/.tmux.conf
+fi
 
 # git
 echo "================"

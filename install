@@ -40,11 +40,15 @@ gitemail=$(git config user.email)
 if [[ -z $gituser ]]; then
     read -p 'Git Username: ' gituser
     git config --global user.name $gituser
+else
+    echo "Current git user is: $gituser"
 fi
 
 if [[ -z $gitemail ]]; then
     read -p 'Git Email: ' gitemail
     git config --global user.email $gitemail
+else
+    echo "Current git email is: $gitemail"
 fi
 
 git config --global core.excludesfile ~/.dotfiles/git/gitignore_global 

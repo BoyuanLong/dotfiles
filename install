@@ -6,6 +6,12 @@ echo "Finished updating submodules"
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# dotfiles
+echo "linking dotfiles directory..."
+if [[ ! -f ~/.dotfiles || -L ~/.dotfiles ]]; then
+    ln -s ${BASEDIR} ~/.dotfiles
+fi
+
 # vim
 echo "linking vim files..."
 ln -s ${BASEDIR}/vim/ ~/.vim

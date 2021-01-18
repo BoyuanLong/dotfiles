@@ -7,24 +7,24 @@ echo "Finished updating submodules"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # dotfiles
-echo "================"
+echo "====== dotfiles ======"
 echo "linking dotfiles directory..."
 if [[ ! -f ~/.dotfiles || -L ~/.dotfiles ]]; then
     ln -s ${BASEDIR} ~/.dotfiles
 fi
 
 # vim
-echo "================"
+echo "====== vim ======"
 echo "linking vim files..."
 ln -s ${BASEDIR}/vim/ ~/.vim
 
 # shell
-echo "================"
+echo "====== shell ======"
 echo "linking shell files..."
 ln -s ${BASEDIR}/shell/ ~/.shell
 
 # zsh
-echo "================"
+echo "====== zsh ======"
 if [[ -z $(which zsh) ]]; then
     echo "WARNING: No zsh installed! Please install zsh first"
 else
@@ -33,7 +33,7 @@ else
 fi
 
 # tmux
-echo "================"
+echo "====== tmux ======"
 if [[ -z $(which tmux) ]]; then
     echo "WARNING: No tmux installed! Please install tmux first"
 else
@@ -42,7 +42,7 @@ else
 fi
 
 # git
-echo "================"
+echo "====== git ======"
 echo "Setting up git files..."
 gituser=$(git config --global --includes user.name)
 gitemail=$(git config --global --includes user.email)

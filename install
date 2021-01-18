@@ -1,44 +1,42 @@
 #!/bin/bash
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
 echo "Updating submodules..."
-git submodule update --init --recursive
-echo "Finished updating submodules"
+git submodule update --init --recursive || echo -e "${GREEN}Finished updating submodules${NC}"
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # dotfiles
 echo "====== dotfiles ======"
-echo "Linking dotfiles directory..."
 if [[ ! -f ~/.dotfiles || -L ~/.dotfiles ]]; then
-    ln -s -f ${BASEDIR} ~/.dotfiles
+    ln -s -f ${BASEDIR} ~/.dotfiles || echo -e "${GREEN}Linked dotfiles directory${NC}"
 fi
 
 # vim
 echo "====== vim ======"
-echo "Linking vim files..."
-ln -s -f ${BASEDIR}/vim/ ~/.vim
+ln -s -f ${BASEDIR}/vim/ ~/.vim || echo -e "${GREEN}Linked vim files${NC}"
 
 # zsh
 echo "====== zsh ======"
 if [[ -z $(which zsh) ]]; then
-    echo "WARNING: No zsh installed! Please install zsh first"
+    echo "${RED}WARNING: No zsh installed! Please install zsh first${NC}"
 else
-    echo "Linking zsh files..."
-    ln -s -f ${BASEDIR}/zsh/zshrc ~/.zshrc
+    ln -s -f ${BASEDIR}/zsh/zshrc ~/.zshrc || echo -e "${RED}Linked zsh files${NC}"
 fi
 
 # tmux
 echo "====== tmux ======"
 if [[ -z $(which tmux) ]]; then
-    echo "WARNING: No tmux installed! Please install tmux first"
+    echo "${RED}WARNING: No tmux installed! Please install tmux first${NC}"
 else
-    echo "Linking tmux files..."
-    ln -s -f ${BASEDIR}/tmux/tmux.conf ~/.tmux.conf
+    ln -s -f ${BASEDIR}/tmux/tmux.conf ~/.tmux.conf || echo -e "${GREEN}Linked tmux files${NC}"
 fi
 
 # git
 echo "====== git ======"
-echo "Setting up git files..."
 gituser=$(git config --global --includes user.name)
 gitemail=$(git config --global --includes user.email)
 if [[ -z $gituser ]]; then
@@ -57,5 +55,6 @@ fi
 
 git config --global core.excludesfile ~/.dotfiles/git/gitignore_global 
 git config --global include.path ~/.dotfiles/git/gitconfig 
+echo "${GREEN}Linked git files${NC}"
 # ln -s ${BASEDIR}/git/gitconfig ~/.gitconfig
 # ln -s ${BASEDIR}/git/gitignore_global ~/.gitignore_global

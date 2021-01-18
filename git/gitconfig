@@ -85,6 +85,3 @@
 
 [grep]
 	lineNumber = true
-
-[core]
-    excludesfile = ~/.gitignore_global

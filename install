@@ -18,11 +18,6 @@ echo "====== vim ======"
 echo "Linking vim files..."
 ln -s -f ${BASEDIR}/vim/ ~/.vim
 
-# shell
-echo "====== shell ======"
-echo "Linking shell files..."
-ln -s -f ${BASEDIR}/shell/ ~/.shell
-
 # zsh
 echo "====== zsh ======"
 if [[ -z $(which zsh) ]]; then

@@ -4,7 +4,10 @@
     rvm = "!f() { git push origin HEAD:refs/for/master%${1}; }; f"
     rv = "!f() { git push origin HEAD:refs/for/${1:-master}%${2}; }; f"
     fp = "!f() { git fetch origin refs/changes/$(printf "%02d" $(expr ${1} % 100))/${1}/${2:-1} && git checkout FETCH_HEAD;}; f"
-    cin = commit --amend --no-edit
+    ci = commit -v
+    ca = commit --amend -v
+    can = commit --amend -v --no-edit
+    save = commit -a -m "Save"
     delbranch = "!f() { git branch | grep sandbox | xargs git branch -D; }; f"
 	dropbox = ! "git-dropbox-manage"
 	exec = ! "exec"
@@ -14,9 +17,6 @@
 	bra = branch -vv --all
 	bed = branch --edit-description
 	aa = add --all :/
-	ci = commit -v
-	ca = commit --amend -v
-	save = commit -a -m "Save"
 	co = checkout
 	di = diff
 	dis = diff --stat

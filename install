@@ -57,5 +57,7 @@ fi
 git config --global core.excludesfile ~/.dotfiles/git/gitignore_global 
 git config --global include.path ~/.dotfiles/git/gitconfig 
 echo -e "${GREEN}Linked git files${NC}"
-# ln -s ${BASEDIR}/git/gitconfig ~/.gitconfig
-# ln -s ${BASEDIR}/git/gitignore_global ~/.gitignore_global
+
+# ssh
+echo "====== ssh ======"
+( ssh-keygen -t ed25519 -C $gitemail || ssh-keygen -t rsa -b 4096 -C $gitemail ) && echo -e "${GREEN}ssh key generated${NC}"

@@ -4,6 +4,26 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
+function usage() {
+    echo -e "${GREEN}USAGE${NC}: ./install"
+    echo -e "${GREEN}Install ZSH${NC}: sudo apt install zsh"
+    echo -e "${GREEN}Change Shell${NC}: chsh -s $(which zsh)"
+    echo -e "${GREEN}Install TMUX${NC}: sudo apt install tmux"
+}
+
+while getopts 'h' opt; do
+    case $opt in
+    h)
+        usage
+        exit
+        ;;
+    *)
+        usage
+        exit
+        ;;
+esac
+done
+
 echo "======================"
 echo "Starting install script..."
 git submodule update --init --recursive && echo -e "${GREEN}Finished updating submodules${NC}"

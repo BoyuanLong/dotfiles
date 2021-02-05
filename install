@@ -21,7 +21,7 @@ while getopts 'h' opt; do
         usage
         exit
         ;;
-esac
+    esac
 done
 
 echo "======================"

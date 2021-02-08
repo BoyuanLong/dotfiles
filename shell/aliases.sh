@@ -68,7 +68,7 @@ alias zshu='source ~/.zshrc'
 
 dfu() {
     (
-        cd ~/.dotfiles/ && git pull --ff-only
+        cd ~/.dotfiles/ && git pull --ff-only && bash ~/.dotfiles/install
     )
 }
 

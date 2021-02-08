@@ -11,11 +11,16 @@ function usage() {
     echo -e "${GREEN}Install TMUX${NC}: sudo apt install tmux"
 }
 
-while getopts 'h' opt; do
+UPDATE_MODE=0
+
+while getopts 'hu' opt; do
     case $opt in
     h)
         usage
         exit
+        ;;
+    u)
+        UPDATE_MODE=1
         ;;
     *)
         usage
@@ -32,8 +37,12 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # dotfiles
 echo "====== dotfiles ======"
-if [[ ! -d ~/.dotfiles || -L ~/.dotfiles ]]; then
+if [[ $UPDATE_MODE == 1 ]]; then
+    echo "Update mode!"
+elif [[ ! -d ~/.dotfiles ]]; then
     ln -sfn ${BASEDIR} ~/.dotfiles && echo -e "${GREEN}Linked dotfiles directory${NC}"
+else
+    echo -e "${RED}Error: dofiles folder exists!${NC}"
 fi
 
 # vim
@@ -80,4 +89,8 @@ echo -e "${GREEN}Linked git files${NC}"
 
 # ssh
 echo "====== ssh ======"
-( ssh-keygen -t ed25519 -C $gitemail || ssh-keygen -t rsa -b 4096 -C $gitemail ) && echo -e "${GREEN}ssh key generated${NC}"
+if [[ $UPDATE_MODE == 0 ]]; then
+    ( ssh-keygen -t ed25519 -C $gitemail || ssh-keygen -t rsa -b 4096 -C $gitemail ) && echo -e "${GREEN}ssh key generated${NC}"
+else
+    echo "Update mode!"
+fi

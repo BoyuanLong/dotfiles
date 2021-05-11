@@ -37,3 +37,7 @@ if [ -f ~/.zshrc_local_after ]; then
     source ~/.zshrc_local_after
 fi
 
+path_prepend "/home/boyuan/.local/bin"
+
+. /opt/anaconda3/etc/profile.d/conda.sh
+

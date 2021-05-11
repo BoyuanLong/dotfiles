@@ -72,3 +72,4 @@ dfu() {
     )
 }
 
+alias sq=squeue

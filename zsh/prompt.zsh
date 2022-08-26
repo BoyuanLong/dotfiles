@@ -108,7 +108,7 @@ RPR_SHOW_HOST=true # Set to false to disable host in rhs prompt
 function RPR_HOST() {
     local colors
     colors=(cyan green yellow red pink)
-    local index=$(python <<EOF
+    local index=$(python3 <<EOF
 import hashlib
 
 hash = int(hashlib.sha1('$(machine_name)'.encode('utf8')).hexdigest(), 16)

@@ -9,7 +9,7 @@
 	url = https://github.com/preservim/nerdtree.git
 [submodule "vim/bundle/vim-colors-solarized"]
 	path = vim/bundle/vim-colors-solarized
-	url = git://github.com/altercation/vim-colors-solarized.git
+	url = https://github.com/altercation/vim-colors-solarized.git
 [submodule "vim/bundle/vim-cpp-modern"]
 	path = vim/bundle/vim-cpp-modern
 	url = https://github.com/bfrg/vim-cpp-modern.git

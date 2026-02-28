@@ -1,0 +1,21 @@
+# Load functions
+source ~/.dotfiles/zsh/functions.sh
+
+# External plugins (initialized before)
+# For now we only have zsh-completions
+source ~/.dotfiles/zsh/plugins_before.zsh
+
+# Settings
+source ~/.dotfiles/zsh/settings.zsh
+
+# Aliases
+source ~/.dotfiles/zsh/aliases.sh
+
+# Prompt
+source ~/.dotfiles/zsh/prompt.zsh
+
+# External plugins
+source ~/.dotfiles/zsh/plugins_after.zsh
+
+path_prepend "$HOME/bin"
+path_prepend "$HOME/.local/bin"

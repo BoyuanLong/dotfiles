@@ -55,7 +55,12 @@ echo "====== zsh ======"
 if ! command -v zsh &>/dev/null; then
     echo -e "${RED}WARNING: No zsh installed! Please install zsh first${NC}"
 else
-    ln -s -f "${BASEDIR}/zsh/zshrc" ~/.zshrc && echo -e "${GREEN}Linked zsh files${NC}"
+    if [[ ! -f ~/.zshrc ]] || ! grep -q "zshrc.shared" ~/.zshrc; then
+        echo 'source ~/.dotfiles/zsh/zshrc.shared' >> ~/.zshrc
+        echo -e "${GREEN}Added source line to ~/.zshrc${NC}"
+    else
+        echo "~/.zshrc already sources zshrc.shared"
+    fi
 fi
 
 # tmux

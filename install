@@ -48,7 +48,13 @@ fi
 
 # vim
 echo "====== vim ======"
-ln -s -f -n "${BASEDIR}/vim" ~/.vim && echo -e "${GREEN}Linked vim files${NC}"
+ln -s -f -n "${BASEDIR}/vim" ~/.vim && echo -e "${GREEN}Linked vim directory${NC}"
+if [[ ! -f ~/.vimrc ]] || ! grep -q "vimrc.shared" ~/.vimrc; then
+    echo 'source ~/.dotfiles/vim/vimrc.shared' >> ~/.vimrc
+    echo -e "${GREEN}Added source line to ~/.vimrc${NC}"
+else
+    echo "~/.vimrc already sources vimrc.shared"
+fi
 
 # zsh
 echo "====== zsh ======"
@@ -68,7 +74,12 @@ echo "====== tmux ======"
 if ! command -v tmux &>/dev/null; then
     echo -e "${RED}WARNING: No tmux installed! Please install tmux first${NC}"
 else
-    ln -s -f "${BASEDIR}/tmux/tmux.conf" ~/.tmux.conf && echo -e "${GREEN}Linked tmux files${NC}"
+    if [[ ! -f ~/.tmux.conf ]] || ! grep -q "tmux.conf.shared" ~/.tmux.conf; then
+        echo 'source-file ~/.dotfiles/tmux/tmux.conf.shared' >> ~/.tmux.conf
+        echo -e "${GREEN}Added source line to ~/.tmux.conf${NC}"
+    else
+        echo "~/.tmux.conf already sources tmux.conf.shared"
+    fi
 fi
 
 # git

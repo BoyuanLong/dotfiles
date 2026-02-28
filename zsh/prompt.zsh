@@ -96,8 +96,8 @@ function RPR_USER() {
 }
 
 function machine_name() {
-    if [[ -f $HOME/.name ]]; then
-        cat $HOME/.name
+    if [[ -f "$HOME/.name" ]]; then
+        cat "$HOME/.name"
     else
         hostname
     fi
@@ -108,16 +108,9 @@ RPR_SHOW_HOST=true # Set to false to disable host in rhs prompt
 function RPR_HOST() {
     local colors
     colors=(cyan green yellow red pink)
-    local index=$(python3 <<EOF
-import hashlib
-
-hash = int(hashlib.sha1('$(machine_name)'.encode('utf8')).hexdigest(), 16)
-index = hash % ${#colors} + 1
-
-print(index)
-EOF
-    )
-    local color=$colors[index]
+    local hash_val=$(echo -n "$(machine_name)" | cksum | cut -d' ' -f1)
+    local index=$(( hash_val % ${#colors} + 1 ))
+    local color=$colors[$index]
     if [[ "${RPR_SHOW_HOST}" == "true" ]]; then
         echo "%{$fg[$color]%}$(machine_name)%{$reset_color%}"
     fi
@@ -166,7 +159,7 @@ function parse_git_state() {
 
     local NUM_AHEAD="$(git log --oneline @{u}.. 2> /dev/null | wc -l | tr -d ' ')"
     if [ "$NUM_AHEAD" -gt 0 ]; then
-    GIT_STATE=$GIT_STATE${GIT_PROMPT_AHEAD//NUM/$NUM_AHEAD}
+        GIT_STATE=$GIT_STATE${GIT_PROMPT_AHEAD//NUM/$NUM_AHEAD}
     fi
 
     local NUM_BEHIND="$(git log --oneline ..@{u} 2> /dev/null | wc -l | tr -d ' ')"
@@ -174,27 +167,27 @@ function parse_git_state() {
         if [[ -n $GIT_STATE ]]; then
             GIT_STATE="$GIT_STATE "
         fi
-    GIT_STATE=$GIT_STATE${GIT_PROMPT_BEHIND//NUM/$NUM_BEHIND}
+        GIT_STATE=$GIT_STATE${GIT_PROMPT_BEHIND//NUM/$NUM_BEHIND}
     fi
 
     local GIT_DIR="$(git rev-parse --git-dir 2> /dev/null)"
-    if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
+    if [[ -n "$GIT_DIR" ]] && test -r "$GIT_DIR/MERGE_HEAD"; then
         if [[ -n $GIT_STATE ]]; then
             GIT_STATE="$GIT_STATE "
         fi
-    GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
+        GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
     fi
 
     if [[ -n $(git ls-files --other --exclude-standard :/ 2> /dev/null) ]]; then
-    GIT_DIFF=$GIT_PROMPT_UNTRACKED
+        GIT_DIFF=$GIT_PROMPT_UNTRACKED
     fi
 
     if ! git diff --quiet 2> /dev/null; then
-    GIT_DIFF=$GIT_DIFF$GIT_PROMPT_MODIFIED
+        GIT_DIFF=$GIT_DIFF$GIT_PROMPT_MODIFIED
     fi
 
     if ! git diff --cached --quiet 2> /dev/null; then
-    GIT_DIFF=$GIT_DIFF$GIT_PROMPT_STAGED
+        GIT_DIFF=$GIT_DIFF$GIT_PROMPT_STAGED
     fi
 
     if [[ -n $GIT_STATE && -n $GIT_DIFF ]]; then
@@ -203,7 +196,7 @@ function parse_git_state() {
     GIT_STATE="$GIT_STATE$GIT_DIFF"
 
     if [[ -n $GIT_STATE ]]; then
-    echo "$GIT_PROMPT_PREFIX$GIT_STATE$GIT_PROMPT_SUFFIX"
+        echo "$GIT_PROMPT_PREFIX$GIT_STATE$GIT_PROMPT_SUFFIX"
     fi
 }
 
@@ -331,10 +324,11 @@ function RCMD() {
 }
 
 ASYNC_PROC=0
+_ZSH_PROMPT_TMPDIR="${TMPDIR:-/tmp}"
 function precmd() {
     function async() {
         # save to temp file
-        printf "%s" "$(RCMD)" > "/tmp/zsh_prompt_$$"
+        printf "%s" "$(RCMD)" > "${_ZSH_PROMPT_TMPDIR}/zsh_prompt_$$"
 
         # signal parent
         kill -s USR1 $$
@@ -354,7 +348,7 @@ function precmd() {
 
 function TRAPUSR1() {
     # read from temp file
-    RPROMPT="$(cat /tmp/zsh_prompt_$$)"
+    RPROMPT="$(cat "${_ZSH_PROMPT_TMPDIR}/zsh_prompt_$$")"
 
     # reset proc number
     ASYNC_PROC=0

@@ -1,10 +1,10 @@
 # Use colors
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     alias ls='ls --color=auto'
-    alias grep='grep --color'
+    alias grep='grep --color=auto'
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     alias ls='ls -G'
-    alias grep='grep -G'
+    alias grep='grep --color=auto'
 fi
 
 # ls aliases
@@ -15,18 +15,18 @@ alias la='ls -A'
 # short name for ls
 alias l='ls'
 
-# Aliases to protect agianst overwritting
+# Aliases to protect against overwriting
 alias cp='cp -i'
 alias mv='mv -i'
 
 # Create a directory and cd into it
 mcd() {
-    mkdir "${1}" && cd "${1}"
+    mkdir -p "${1}" && cd "${1}"
 }
 
 # Jump to directory containing file
 jump() {
-    cd "$(dirname ${1})"
+    cd "$(dirname "${1}")"
 }
 
 # Go up [n] directories

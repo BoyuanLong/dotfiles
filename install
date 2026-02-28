@@ -1,20 +1,21 @@
 #!/bin/bash
+set -euo pipefail
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-function usage() {
+usage() {
     echo -e "${GREEN}USAGE${NC}: ./install"
     echo -e "${GREEN}Install ZSH${NC}: sudo apt install zsh"
-    echo -e "${GREEN}Change Shell${NC}: chsh -s $(which zsh)"
+    echo -e "${GREEN}Change Shell${NC}: chsh -s \$(command -v zsh)"
     echo -e "${GREEN}Install TMUX${NC}: sudo apt install tmux"
 }
 
 UPDATE_MODE=0
 
 while getopts 'hu' opt; do
-    case $opt in
+    case "$opt" in
     h)
         usage
         exit
@@ -37,60 +38,60 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # dotfiles
 echo "====== dotfiles ======"
-if [[ $UPDATE_MODE == 1 ]]; then
+if [[ "$UPDATE_MODE" == 1 ]]; then
     echo "Update mode!"
 elif [[ ! -d ~/.dotfiles ]]; then
-    ln -sfn ${BASEDIR} ~/.dotfiles && echo -e "${GREEN}Linked dotfiles directory${NC}"
+    ln -sfn "${BASEDIR}" ~/.dotfiles && echo -e "${GREEN}Linked dotfiles directory${NC}"
 else
-    echo -e "${RED}Error: dofiles folder exists!${NC}"
+    echo -e "${RED}Error: dotfiles folder exists!${NC}"
 fi
 
 # vim
 echo "====== vim ======"
-ln -s -f -n ${BASEDIR}/vim ~/.vim && echo -e "${GREEN}Linked vim files${NC}"
+ln -s -f -n "${BASEDIR}/vim" ~/.vim && echo -e "${GREEN}Linked vim files${NC}"
 
 # zsh
 echo "====== zsh ======"
-if [[ -z $(which zsh) ]]; then
+if ! command -v zsh &>/dev/null; then
     echo -e "${RED}WARNING: No zsh installed! Please install zsh first${NC}"
 else
-    ln -s -f ${BASEDIR}/zsh/zshrc ~/.zshrc && echo -e "${GREEN}Linked zsh files${NC}"
+    ln -s -f "${BASEDIR}/zsh/zshrc" ~/.zshrc && echo -e "${GREEN}Linked zsh files${NC}"
 fi
 
 # tmux
 echo "====== tmux ======"
-if [[ -z $(which tmux) ]]; then
+if ! command -v tmux &>/dev/null; then
     echo -e "${RED}WARNING: No tmux installed! Please install tmux first${NC}"
 else
-    ln -s -f ${BASEDIR}/tmux/tmux.conf ~/.tmux.conf && echo -e "${GREEN}Linked tmux files${NC}"
+    ln -s -f "${BASEDIR}/tmux/tmux.conf" ~/.tmux.conf && echo -e "${GREEN}Linked tmux files${NC}"
 fi
 
 # git
 echo "====== git ======"
-gituser=$(git config --global --includes user.name)
-gitemail=$(git config --global --includes user.email)
-if [[ -z $gituser ]]; then
+gituser=$(git config --global --includes user.name || true)
+gitemail=$(git config --global --includes user.email || true)
+if [[ -z "$gituser" ]]; then
     read -p 'Git Username: ' gituser
     git config --global user.name "$gituser"
 else
     echo "Current git user is: $gituser"
 fi
 
-if [[ -z $gitemail ]]; then
+if [[ -z "$gitemail" ]]; then
     read -p 'Git Email: ' gitemail
     git config --global user.email "$gitemail"
 else
     echo "Current git email is: $gitemail"
 fi
 
-git config --global core.excludesfile ~/.dotfiles/git/gitignore_global 
-git config --global include.path ~/.dotfiles/git/gitconfig 
+git config --global core.excludesfile ~/.dotfiles/git/gitignore_global
+git config --global include.path ~/.dotfiles/git/gitconfig
 echo -e "${GREEN}Linked git files${NC}"
 
 # ssh
 echo "====== ssh ======"
-if [[ $UPDATE_MODE == 0 ]]; then
-    ( ssh-keygen -t ed25519 -C $gitemail || ssh-keygen -t rsa -b 4096 -C $gitemail ) && echo -e "${GREEN}ssh key generated${NC}"
+if [[ "$UPDATE_MODE" == 0 ]]; then
+    ( ssh-keygen -t ed25519 -C "$gitemail" || ssh-keygen -t rsa -b 4096 -C "$gitemail" ) && echo -e "${GREEN}ssh key generated${NC}"
 else
     echo "Update mode!"
 fi

@@ -50,3 +50,34 @@ disable r
 
 # Prevent less from keeping history file
 export LESSHISTFILE=/dev/null
+
+# fzf configuration
+if command -v fzf &>/dev/null; then
+    # Use fd for fzf if available (faster, respects .gitignore)
+    if command -v fd &>/dev/null; then
+        export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+        export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+    fi
+
+    # Solarized dark color scheme
+    export FZF_DEFAULT_OPTS='
+        --color=bg+:#073642,bg:#002b36,spinner:#719e07,hl:#586e75
+        --color=fg:#839496,header:#586e75,info:#cb4b16,pointer:#719e07
+        --color=marker:#719e07,fg+:#839496,prompt:#719e07,hl+:#719e07
+        --bind=ctrl-d:half-page-down,ctrl-u:half-page-up'
+
+    # Source fzf keybindings and completion (supports multiple install methods)
+    if [[ -f ~/.fzf.zsh ]]; then
+        source ~/.fzf.zsh
+    elif [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
+        source /usr/share/doc/fzf/examples/key-bindings.zsh
+        source /usr/share/doc/fzf/examples/completion.zsh
+    elif [[ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]]; then
+        source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+        source /opt/homebrew/opt/fzf/shell/completion.zsh
+    elif [[ -f /usr/local/opt/fzf/shell/key-bindings.zsh ]]; then
+        source /usr/local/opt/fzf/shell/key-bindings.zsh
+        source /usr/local/opt/fzf/shell/completion.zsh
+    fi
+fi

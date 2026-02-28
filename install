@@ -95,3 +95,43 @@ if [[ "$UPDATE_MODE" == 0 ]]; then
 else
     echo "Update mode!"
 fi
+
+# recommended tools
+echo "====== recommended tools ======"
+YELLOW='\033[0;33m'
+RECOMMENDED_TOOLS=(fzf ripgrep bat fd-find eza git-delta shellcheck)
+MISSING_TOOLS=()
+# Map package names to commands
+declare -A TOOL_COMMANDS=(
+    [fzf]=fzf
+    [ripgrep]=rg
+    [bat]=bat
+    [fd-find]=fd
+    [eza]=eza
+    [git-delta]=delta
+    [shellcheck]=shellcheck
+)
+# Debian/Ubuntu alternatives
+declare -A TOOL_ALT_COMMANDS=(
+    [bat]=batcat
+    [fd-find]=fdfind
+)
+
+for tool in "${RECOMMENDED_TOOLS[@]}"; do
+    cmd="${TOOL_COMMANDS[$tool]}"
+    alt="${TOOL_ALT_COMMANDS[$tool]:-}"
+    if ! command -v "$cmd" &>/dev/null && ! command -v "$alt" &>/dev/null; then
+        MISSING_TOOLS+=("$tool")
+    fi
+done
+
+if [[ ${#MISSING_TOOLS[@]} -gt 0 ]]; then
+    echo -e "${YELLOW}The following recommended tools are not installed:${NC}"
+    for tool in "${MISSING_TOOLS[@]}"; do
+        echo -e "  ${YELLOW}- $tool${NC}"
+    done
+    echo -e "Install all with: ${GREEN}sudo apt install ${MISSING_TOOLS[*]}${NC}"
+    echo -e "Or on macOS:      ${GREEN}brew install ${MISSING_TOOLS[*]}${NC}"
+else
+    echo -e "${GREEN}All recommended tools are installed!${NC}"
+fi

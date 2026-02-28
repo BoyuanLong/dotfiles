@@ -7,13 +7,37 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     alias grep='grep --color=auto'
 fi
 
-# ls aliases
-# ls everything in list format
-alias ll='ls -lah'
-# ls everything except for . and ..
-alias la='ls -A'
-# short name for ls
-alias l='ls'
+# eza: modern ls replacement (falls back to ls)
+if command -v eza &>/dev/null; then
+    alias ls='eza'
+    alias ll='eza -la --git --group-directories-first'
+    alias la='eza -a'
+    alias l='eza'
+    alias lt='eza --tree --level=2'
+else
+    alias ll='ls -lah'
+    alias la='ls -A'
+    alias l='ls'
+fi
+
+# bat: cat with syntax highlighting
+if command -v bat &>/dev/null; then
+    alias cat='bat --paging=never'
+    alias catp='bat'
+elif command -v batcat &>/dev/null; then
+    # Debian/Ubuntu installs bat as batcat
+    alias cat='batcat --paging=never'
+    alias catp='batcat'
+fi
+
+# fd: modern find alternative
+if command -v fd &>/dev/null; then
+    # fd is already named fd
+    :
+elif command -v fdfind &>/dev/null; then
+    # Debian/Ubuntu installs fd as fdfind
+    alias fd='fdfind'
+fi
 
 # Aliases to protect against overwriting
 alias cp='cp -i'

@@ -1,14 +1,14 @@
 [alias]
-    # 叹号开头表示执行后续的 shell 命令
-    new = "!f() { git fetch && git checkout -b sandbox/`whoami`/`date +%m-%d`/${2:-`date +%H-%M`} origin/${1:-master}; }; f"
-    rvm = "!f() { git push origin HEAD:refs/for/master%${1}; }; f"
-    rv = "!f() { git push origin HEAD:refs/for/${1:-master}%${2}; }; f"
-    fp = "!f() { git fetch origin refs/changes/$(printf "%02d" $(expr ${1} % 100))/${1}/${2:-1} && git checkout FETCH_HEAD;}; f"
-    ci = commit -v
-    ca = commit --amend -v
-    can = commit --amend -v --no-edit
-    save = commit -a -m "Save"
-    delbranch = "!f() { git branch | grep sandbox | xargs git branch -D; }; f"
+	# Shell command aliases (prefixed with !)
+	new = "!f() { git fetch && git checkout -b sandbox/`whoami`/`date +%m-%d`/${2:-`date +%H-%M`} origin/${1:-master}; }; f"
+	rvm = "!f() { git push origin HEAD:refs/for/master%${1}; }; f"
+	rv = "!f() { git push origin HEAD:refs/for/${1:-master}%${2}; }; f"
+	fp = "!f() { git fetch origin refs/changes/$(printf "%02d" $(expr ${1} % 100))/${1}/${2:-1} && git checkout FETCH_HEAD;}; f"
+	ci = commit -v
+	ca = commit --amend -v
+	can = commit --amend -v --no-edit
+	save = commit -a -m "Save"
+	delbranch = "!f() { git branch | grep sandbox | xargs git branch -D; }; f"
 	dropbox = ! "git-dropbox-manage"
 	exec = ! "exec"
 	st = status -sb
@@ -66,7 +66,7 @@
 
 [color]
 	ui = auto
-    
+
 [color "grep"]
 	match = cyan bold
 	selected = blue

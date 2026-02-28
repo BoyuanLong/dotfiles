@@ -5,7 +5,7 @@ set nocompatible " not vi compatible
 "------------------
 execute pathogen#infect()
 
-"-----------------
+"------------------
 " Syntax and indent
 "------------------
 syntax on " turn on syntax highlighting
@@ -72,7 +72,7 @@ set softtabstop=4
 " smart case-sensitive search
 set ignorecase
 set smartcase
-" tab completion for files/bufferss
+" tab completion for files/buffers
 set wildmode=longest,list
 set wildmenu
 set mouse+=a " enable mouse mode (scrolling, selection, etc)

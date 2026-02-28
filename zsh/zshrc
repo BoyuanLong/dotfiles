@@ -1,15 +1,5 @@
 # Load functions
-source ~/.dotfiles/shell/functions.sh
-
-# Allow local customizations in the ~/.shell_local_before file
-if [[ -f ~/.shell_local_before ]]; then
-    source ~/.shell_local_before
-fi
-
-# Allow local customizations in the ~/.zshrc_local_before file
-if [[ -f ~/.zshrc_local_before ]]; then
-    source ~/.zshrc_local_before
-fi
+source ~/.dotfiles/zsh/functions.sh
 
 # External plugins (initialized before)
 # For now we only have zsh-completions
@@ -19,7 +9,7 @@ source ~/.dotfiles/zsh/plugins_before.zsh
 source ~/.dotfiles/zsh/settings.zsh
 
 # Aliases
-source ~/.dotfiles/shell/aliases.sh
+source ~/.dotfiles/zsh/aliases.sh
 
 # Prompt
 source ~/.dotfiles/zsh/prompt.zsh
@@ -27,28 +17,17 @@ source ~/.dotfiles/zsh/prompt.zsh
 # External plugins
 source ~/.dotfiles/zsh/plugins_after.zsh
 
-# Allow local customizations in the ~/.shell_local_after file
-if [[ -f ~/.shell_local_after ]]; then
-    source ~/.shell_local_after
-fi
-
-# Allow local customizations in the ~/.zshrc_local_after file
-if [[ -f ~/.zshrc_local_after ]]; then
-    source ~/.zshrc_local_after
-fi
-
-
 # . /opt/anaconda3/etc/profile.d/conda.sh
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('{{ .chezmoi.homeDir }}/miniconda3/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
-if [[ $? -eq 0 ]]; then
+__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [[ -f "{{ .chezmoi.homeDir }}/miniconda3/etc/profile.d/conda.sh" ]]; then
-        . "{{ .chezmoi.homeDir }}/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="{{ .chezmoi.homeDir }}/miniconda3/bin:$PATH"
+        export PATH="/opt/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -56,3 +35,24 @@ unset __conda_setup
 
 path_prepend "$HOME/bin"
 path_prepend "$HOME/.local/bin"
+
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+export no_proxy=*
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/boyuanlong/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/boyuanlong/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/boyuanlong/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/boyuanlong/google-cloud-sdk/completion.zsh.inc'; fi
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# OpenClaw Completion
+source "/Users/boyuanlong/.openclaw/completions/openclaw.zsh"
+
+# Local customizations (API keys, machine-specific config)
+if [[ -f ~/.shell_local_after ]]; then
+    source ~/.shell_local_after
+fi

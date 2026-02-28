@@ -25,15 +25,25 @@ dfu  # alias defined in zsh/aliases.sh - pulls and re-runs install
 
 The install script:
 - Updates all git submodules
-- Creates symlinks for vim, zsh, tmux, and git configs
+- Creates symlinks for vim, tmux, and git configs
+- Appends `source ~/.dotfiles/zsh/zshrc.shared` to `~/.zshrc` (does not symlink, to allow local additions)
 - Sets up git global config (user.name, user.email, excludesfile, include.path)
 - Generates SSH keys (initial install only)
 
 ## Architecture
 
-### ZSH Configuration Loading Order
+### ZSH Configuration: Shared vs Local
 
-The zsh configuration follows a specific loading sequence in `zsh/zshrc`:
+ZSH config is split into shared (in-repo) and local (per-machine) parts:
+
+- **`zsh/zshrc.shared`** (in git) — portable config sourced by all machines
+- **`~/.zshrc`** (local, not in git) — machine-specific config (conda, homebrew, gcloud, API keys). Tools like `conda init` write here without dirtying the repo.
+
+The install script appends `source ~/.dotfiles/zsh/zshrc.shared` to `~/.zshrc` rather than symlinking, so local additions are preserved.
+
+### ZSH Shared Config Loading Order
+
+`zsh/zshrc.shared` sources files in this sequence:
 
 1. `zsh/functions.sh` - PATH manipulation functions (path_remove, path_append, path_prepend)
 2. `zsh/plugins_before.zsh` - Pre-initialization plugins (zsh-completions, zsh-autosuggestions)
@@ -89,6 +99,5 @@ git submodule update --init --recursive
 ## Important Notes
 
 - The repository expects to be cloned/linked to `~/.dotfiles`
-- API keys are currently hardcoded in `zsh/zshrc` (lines 54-55) - these should be moved to a local, non-committed file
-- Conda initialization is included in `zsh/zshrc` with path to `/opt/anaconda3`
+- Machine-specific config (API keys, conda, homebrew paths) belongs in `~/.zshrc`, not in the repo
 - The config is set up for macOS (darwin) and Linux compatibility with OS-specific checks

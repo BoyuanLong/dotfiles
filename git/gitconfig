@@ -82,3 +82,16 @@
 
 [grep]
 	lineNumber = true
+
+# delta pager configuration (activated via GIT_PAGER in zsh/cli_tools.sh)
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+	syntax-theme = Solarized (Dark)
+
+[diff]
+	colorMoved = default
+
+[merge]
+	conflictstyle = diff3

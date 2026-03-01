@@ -11,6 +11,9 @@ source ~/.dotfiles/zsh/settings.zsh
 # Aliases
 source ~/.dotfiles/zsh/aliases.sh
 
+# Modern CLI tools (conditional - only activates if tools are installed)
+source ~/.dotfiles/zsh/cli_tools.sh
+
 # Prompt
 source ~/.dotfiles/zsh/prompt.zsh
 
